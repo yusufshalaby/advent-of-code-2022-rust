@@ -1,1 +1,0 @@
-/Users/yusufshalaby/Projects/personal-repos/rust-learning/advent-of-code-2022-rust/day4b/target/debug/day4a: /Users/yusufshalaby/Projects/personal-repos/rust-learning/advent-of-code-2022-rust/day4b/input.txt /Users/yusufshalaby/Projects/personal-repos/rust-learning/advent-of-code-2022-rust/day4b/src/main.rs
