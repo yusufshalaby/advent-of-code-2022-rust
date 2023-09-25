@@ -49,12 +49,10 @@ fn main() {
     let output = find_visible(input);
 
     println!(
-        "{:?}",
+        "{}",
         output
             .iter()
             .map(|l| l.iter().map(|(_, s)| s).sum::<i32>())
-            // .collect::<Vec<_>>()
             .sum::<i32>()
     );
-    // println!("{:?}", output);
 }
