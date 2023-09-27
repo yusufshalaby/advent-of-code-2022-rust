@@ -23,11 +23,11 @@ fn main() {
     target_touched.insert(pos_t);
     for (direction, steps) in input {
         for _ in 0..steps {
-            let pos_h_old = pos_h;
             pos_h.0 += direction.0;
             pos_h.1 += direction.1;
             if (pos_h.0).abs_diff(pos_t.0) > 1 || (pos_h.1).abs_diff(pos_t.1) > 1 {
-                pos_t = pos_h_old;
+                pos_t.0 += (pos_h.0 - pos_t.0).signum();
+                pos_t.1 += (pos_h.1 - pos_t.1).signum();
                 target_touched.insert(pos_t);
             }
         }
