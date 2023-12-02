@@ -16,9 +16,9 @@ impl Data {
 
     fn new(mut i: usize, line: &str) -> (usize, Data) {
         let mut data: Data = Data::List(vec![]);
+        let mut num = String::new();
         while i < line.len() {
             let c = line.chars().nth(i).unwrap();
-            // println!("{}", c);
             match c {
                 '[' => {
                     let (delta_i, nested) = Data::new(i + 1, &line);
@@ -26,11 +26,24 @@ impl Data {
                     i = delta_i;
                 }
                 ']' => {
+                    if !num.is_empty() {
+                        data.push(Data::Integer(num.parse::<u32>().unwrap()));
+                    }
                     return (i + 1, data);
                 }
-                _ => {
-                    data.push(Data::Integer(c.to_digit(10).unwrap()));
+                ',' => {
+                    if !num.is_empty() {
+                        data.push(Data::Integer(num.parse::<u32>().unwrap()));
+                        num = String::new();
+                    }
                     i += 1;
+                }
+                '0'..='9' => {
+                    num.push(c);
+                    i += 1;
+                }
+                _ => {
+                    panic!("Unexpected character: {}", c);
                 }
             }
         }
@@ -59,18 +72,13 @@ fn main() {
     let input = include_str!("../input.txt")
         .lines()
         .filter(|line| !line.is_empty())
-        .map(|line| Data::new(0, line.replace(",", "").as_str()).1);
-    // .take(2)
-    // .collect::<Vec<Vec<Data>>>();
-    // .nth(3);
+        .map(|line| Data::new(0, line).1);
 
     let mut result = 0;
     let mut i = 0;
 
     while let Some(line) = input.clone().nth(i + 1) {
         if input.clone().nth(i).unwrap() <= line {
-            println!("{:?}", line);
-            println!("{}", 1 + i / 2);
             result += 1 + i / 2;
         }
         i += 2;
@@ -78,5 +86,4 @@ fn main() {
 
     println!("Final result: {}", result);
 
-    // println!("{:?}", input[0] < input[1]);
 }
